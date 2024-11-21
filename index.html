@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Location by IP</title>
+</head>
+<body>
+    <h1>User's Location</h1>
+    <div id="location"></div>
+
+    <script>
+        async function getLocationByIP() {
+            try {
+                const response = await fetch('https://ipinfo.io/json?token=YOUR_ACCESS_TOKEN');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch location');
+                }
+                const data = await response.json();
+                const [latitude, longitude] = data.loc.split(',');
+
+                document.getElementById('location').innerText = `Latitude: ${latitude}, Longitude: ${longitude}`;
+            } catch (error) {
+                console.error('Error fetching location:', error);
+                document.getElementById('location').innerText = 'Could not retrieve location';
+            }
+        }
+
+        getLocationByIP();
+    </script>
+</body>
+</html>
